@@ -6,26 +6,33 @@
 
 ## 使用
 
-先安装 [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+1. 安装 [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
-安装成功后创建项目，初始化安装:
+2. 安装composer成功后创建项目，初始化代码:
 ```
 composer create-project davyin/commerce_starter-project commerce_starter-project --stability dev  --no-interaction
 cd commerce_starter-project
+composer update
+```
+3. 启动
+
+* 基于sqlite的快速demo:
+```
 composer quick-start
-# drush si commerce_starter  --db-url=mysql://mysql-user:mysql-password@mysql-host:3306/commerce_starter_project --account-pass=admin -y
 ```
 
-如果需要引入其他drupal 模块/主题，使用 `composer require ...` 下载安装:
+* 手工安装至本地数据库
+```
+drush si commerce_starter  --db-url=mysql://mysql-user:mysql-password@mysql-host:3306/commerce_starter_project --account-pass=admin -y
+```
+
+4. 其他模块安装
 
 ```
 cd commerce_starter-project
 composer require "drupal/devel:^4.0"
 ```
 
-The `composer create-project` command passes ownership of all files to the
-project that is created. You should create a new git repository, and commit
-all files not excluded by the .gitignore file.
 
 ## 该项目做了什么？
 
