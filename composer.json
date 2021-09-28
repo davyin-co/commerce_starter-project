@@ -1,0 +1,122 @@
+{
+    "name": "davyin/commerce_starter-project",
+    "type": "project",
+    "description": "Project template for Drupal 9 commerce starter.",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "cweagans/composer-patches": "^1.7",
+        "davyin/commerce_starter": "dev-master",
+        "drupal/console": "^1.9",
+        "oomphinc/composer-installers-extender": "^1.1 || ^2.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.13",
+        "zaporylie/composer-drupal-optimizations": "^1.1"
+    },
+    "config": {
+        "bin-dir": "bin/",
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": false,
+        "composer-normalize": {
+            "indent-size": 4,
+            "indent-style": "space"
+        },
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "docroot/"
+            }
+        },
+        "enable-patching": true,
+        "installer-paths": {
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset",
+                "harvesthq/chosen"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "docroot/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
+        },
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "drupal/theme_switcher",
+                "version": "1.x-dev",
+                "type": "drupal-module",
+                "source": {
+                    "url": "https://git.drupalcode.org/project/theme_switcher.git",
+                    "type": "git",
+                    "reference": "8.x-1.x"
+                }
+            }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/drupalcommerce/commerce_base"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/davyin-co/commerce_starter"
+        },
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-install-cmd": [
+            "@remove-git-submodules",
+            "@format"
+        ],
+        "post-update-cmd": [
+            "@remove-git-submodules",
+            "@format"
+        ],
+        "post-create-project-cmd": [
+            "rm -r -f .travis.yml .travis-ci",
+            "@remove-git-submodules"
+        ],
+        "format": "composer normalize --no-update-lock --no-check-lock",
+        "quick-start": [
+            "chmod 777 docroot/sites/default",
+            "rm -rf docroot/sites/default/settings.php docroot/sites/default/files",
+            "composer install",
+            "php docroot/core/scripts/drupal quick-start commerce_starter --no-interaction"
+        ],
+        "remove-git-submodules": "find . -mindepth 2 -type d -name .git | xargs rm -rf"
+    }
+}
